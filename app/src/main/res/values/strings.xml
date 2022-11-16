@@ -20,4 +20,9 @@
     <string name="dot">.</string>
     <string name="bksp">Bksp</string>
     <string name="changeSign">+/-</string>
+    <string name="basic_calculator">Basic Calculator</string>
+    <string name="welcome_to_the_calculator">Welcome to the calculator!</string>
+    <string name="advanced_calculator">Advanced calculator</string>
+    <string name="about">About</string>
+    <string name="exit">Exit</string>
 </resources>

@@ -15,6 +15,7 @@
         android:padding="10dp"
         android:textSize="48sp"
         android:gravity="end|bottom"
+        android:textColor="@color/secondary"
     />
 
     <LinearLayout
@@ -171,13 +172,13 @@
             android:text="@string/_0"
             tools:ignore="UsingOnClickInXml" />
         <Button
+            android:id="@+id/btnPlusMinus"
             android:layout_margin="2dp"
-            android:id="@+id/btnCLR"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:onClick="onClear"
-            android:text="@string/clr"
+            android:onClick="onChangeSign"
+            android:text="@string/changeSign"
             tools:ignore="UsingOnClickInXml" />
         <Button
             android:layout_margin="2dp"
@@ -196,13 +197,35 @@
         android:layout_weight="1"
         >
         <Button
-            android:id="@+id/btnEqual"
             android:layout_margin="2dp"
-            android:layout_width="0dp"
+            android:id="@+id/btnClear"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="onClear"
+            android:text="@string/clr"
+            tools:ignore="UsingOnClickInXml" />
+
+        <Button
+            android:id="@+id/btnEqual"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="2"
+            android:backgroundTint="#4E6C50"
             android:onClick="onEqual"
             android:text="@string/Equal"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:ignore="UsingOnClickInXml" />
+        <Button
+            android:id="@+id/btnBackspace"
+            android:layout_margin="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onBackspace"
+            android:text="@string/bksp"
             tools:ignore="UsingOnClickInXml" />
     </LinearLayout>
 </LinearLayout>

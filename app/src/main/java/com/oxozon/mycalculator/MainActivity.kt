@@ -10,55 +10,84 @@ import android.widget.Toast
 class MainActivity : AppCompatActivity() {
 
     private var tvInput: TextView? = null
-    var lastNumeric: Boolean = false
-    var lastDot: Boolean = false
+    private var isLastCharNumeric: Boolean = false
+    private var isLastCharDot: Boolean = false
+    private var isLastCharBackspace: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         tvInput = findViewById(R.id.tvInput)
     }
 
     fun onDigit(view: View) {
         tvInput?.append((view as Button).text)
-        lastNumeric = true
-        lastDot = false
-
-
+        isLastCharNumeric = true
+        isLastCharDot = false
+        isLastCharBackspace = false
     }
 
     fun onClear(view: View) {
         tvInput?.text = ""
     }
 
+    fun onBackspace(view: View) {
+        if (isLastCharBackspace) {
+            onClear(view)
+            isLastCharBackspace = false
+        } else {
+            tvInput?.text = tvInput?.text?.dropLast(1)
+            isLastCharBackspace = true
+            val lastChar = tvInput?.text?.toString()?.last() ?: return
+            if (isValueOperator(lastChar)) {
+                isLastCharNumeric = false
+                isLastCharDot = false
+            } else if (lastChar.equals(".")) {
+                isLastCharNumeric = false
+                isLastCharDot = true
+            } else {
+                isLastCharNumeric = true
+                isLastCharDot = false
+            }
+
+        }
+    }
+
     fun onDecimalPoint(view: View) {
-        if (lastNumeric && !lastDot) {
+        if (isLastCharNumeric && !isLastCharDot) {
             tvInput?.append(".")
-            lastNumeric = false
-            lastDot = true
+            isLastCharNumeric = false
+            isLastCharDot = true
         }
     }
 
     fun onOperator(view: View) {
         tvInput?.text?.let {
-            if (lastNumeric && !isOperatorAdded(it.toString())) {
+            if (isLastCharNumeric && !isOperatorAdded(it.toString())) {
                 tvInput?.append((view as Button).text)
-                lastDot = false
-                lastNumeric = false
+                isLastCharDot = false
+                isLastCharNumeric = false
+                isLastCharBackspace = false
+            } else if (isLastCharNumeric && isOperatorAdded(it.toString())) {
+                onEqual(view)
+                tvInput?.append((view as Button).text)
+                isLastCharDot = false
+                isLastCharNumeric = false
+                isLastCharBackspace = false
             }
         }
 
     }
 
     fun onEqual(view: View) {
-        if (lastNumeric) {
+        if (isLastCharNumeric) {
             var tvValue = tvInput?.text.toString()
             var prefix = ""
+            isLastCharBackspace = false
 
             try {
                 if (tvValue.startsWith("-")) {
-                    var prefix = "-"
+                    prefix = "-"
                     tvValue = tvValue.substring(1)
                 }
                 if (tvValue.contains("-")) {
@@ -113,6 +142,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun onChangeSign(view: View) {
+
+    }
 
     private fun removeZeroAfterDot(result: String): String {
         var value = result
@@ -131,5 +163,15 @@ class MainActivity : AppCompatActivity() {
                     || value.contains("+")
                     || value.contains("-")
         }
+    }
+
+    private fun isValueOperator(value: Char?): Boolean {
+        if (value == null) {
+            return false
+        }
+        return  value.equals("/")
+                || value.equals("*")
+                || value.equals("+")
+                || value.equals("-")
     }
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Calculator</string>
+    <string name="app_name">Calculator</string>
     <string name="calc_text">0</string>
     <string name="_dash">/</string>
     <string name="_9">9</string>
@@ -18,4 +18,6 @@
     <string name="Add">+</string>
     <string name="Equal">=</string>
     <string name="dot">.</string>
+    <string name="bksp">Bksp</string>
+    <string name="changeSign">+/-</string>
 </resources>

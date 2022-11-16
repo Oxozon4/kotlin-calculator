@@ -24,6 +24,92 @@
         android:layout_weight="1"
         >
         <Button
+            android:id="@+id/btnSin"
+            android:layout_margin="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onAdvancedOperator"
+            android:text="@string/sin"
+            tools:ignore="UsingOnClickInXml" />
+        <Button
+            android:layout_margin="2dp"
+            android:id="@+id/btnCos"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onAdvancedOperator"
+            android:text="cos"
+            tools:ignore="UsingOnClickInXml" />
+        <Button
+            android:layout_margin="2dp"
+            android:id="@+id/btnTan"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onAdvancedOperator"
+            android:text="@string/tan"
+            tools:ignore="UsingOnClickInXml" />
+        <Button
+            android:layout_margin="2dp"
+            android:id="@+id/btnLn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onAdvancedOperator"
+            android:text="@string/ln"
+            tools:ignore="UsingOnClickInXml" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        >
+        <Button
+            android:id="@+id/btnSqrt"
+            android:layout_margin="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onAdvancedOperator"
+            android:text="@string/sqrt"
+            tools:ignore="UsingOnClickInXml" />
+        <Button
+            android:layout_margin="2dp"
+            android:id="@+id/btnX2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onAdvancedOperator"
+            android:text="@string/x_2"
+            tools:ignore="UsingOnClickInXml" />
+        <Button
+            android:layout_margin="2dp"
+            android:id="@+id/btnXy"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onAdvancedOperator"
+            android:text="@string/x_y"
+            />
+        <Button
+            android:layout_margin="2dp"
+            android:id="@+id/btnLog"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onAdvancedOperator"
+            android:text="@string/logg"
+            tools:ignore="UsingOnClickInXml" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        >
+        <Button
             android:id="@+id/btnSeven"
             android:layout_margin="2dp"
             android:layout_width="wrap_content"

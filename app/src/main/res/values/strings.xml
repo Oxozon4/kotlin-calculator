@@ -25,4 +25,12 @@
     <string name="advanced_calculator">Advanced calculator</string>
     <string name="about">About</string>
     <string name="exit">Exit</string>
+    <string name="sin">sin</string>
+    <string name="tan">tan</string>
+    <string name="ln">ln</string>
+    <string name="sqrt">sqrt</string>
+    <string name="x_2">x^2</string>
+    <string name="x_y">x^y</string>
+    <string name="log">Log</string>
+    <string name="logg">log</string>
 </resources>

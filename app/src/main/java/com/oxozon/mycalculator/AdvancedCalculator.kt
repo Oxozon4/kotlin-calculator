@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import kotlin.math.*
 
 class AdvancedCalculator : AppCompatActivity() {
     private var tvInput: TextView? = null
@@ -15,7 +16,7 @@ class AdvancedCalculator : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_basic_calculator)
+        setContentView(R.layout.activity_advanced_calculator)
         tvInput = findViewById(R.id.tvInput)
     }
 
@@ -75,7 +76,44 @@ class AdvancedCalculator : AppCompatActivity() {
                 isLastCharBackspace = false
             }
         }
+    }
 
+    fun onAdvancedOperator(view: View) {
+        tvInput?.text?.let {
+            if (isLastCharNumeric) {
+                val operator: String = (view as Button).text.toString()
+                var tvValue = tvInput?.text.toString().toDouble()
+                var result: String? = null
+
+                isLastCharDot = false
+                isLastCharBackspace = false
+                isLastCharNumeric = true
+                if (operator == "sin") {
+                    result = sin(tvValue).toString()
+                } else if (operator == "cos") {
+                    result = cos(tvValue).toString()
+                } else if (operator == "tan") {
+                    result = tan(tvValue).toString()
+                } else if (operator == "ln") {
+                    result = ln(tvValue).toString()
+                } else if (operator == "sqrt") {
+                    result = sqrt(tvValue).toString()
+                } else if (operator == "x^2") {
+                    result = tvValue.pow(2).toString()
+                } else if (operator == "x^y") {
+                    tvInput?.append("^")
+                    isLastCharNumeric = false
+                    return
+                } else if (operator == "log") {
+                    tvInput?.append("log")
+                    isLastCharNumeric = false
+                    return
+                }
+                tvInput?.text = result?.let { it1 -> removeZeroAfterDot(it1) }
+            } else {
+                // Toast
+            }
+        }
     }
 
     fun onEqual(view: View) {
@@ -133,6 +171,26 @@ class AdvancedCalculator : AppCompatActivity() {
                     }
 
                     tvInput?.text = removeZeroAfterDot((one.toDouble() * two.toDouble()).toString())
+                } else if (tvValue.contains("^")) {
+                    val splitValue = tvValue.split("^")
+
+                    var one = splitValue[0]
+                    var two = splitValue[1]
+
+                    if (prefix.isNotEmpty()) {
+                        one = prefix + one
+                    }
+                    tvInput?.text = removeZeroAfterDot((one.toDouble().pow(two.toDouble())).toString())
+                } else if (tvValue.contains("log")) {
+                    val splitValue = tvValue.split("log")
+
+                    var one = splitValue[0]
+                    var two = splitValue[1]
+
+                    if (prefix.isNotEmpty()) {
+                        one = prefix + one
+                    }
+                    tvInput?.text = removeZeroAfterDot(log(one.toDouble(), (two.toDouble())).toString())
                 }
 
             } catch (e: java.lang.ArithmeticException) {

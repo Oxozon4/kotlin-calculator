@@ -12,7 +12,6 @@ class BasicCalculator : AppCompatActivity() {
     private var tvInput: TextView? = null
     private var isLastCharNumeric: Boolean = false
     private var isLastCharDot: Boolean = false
-    private var isLastCharBackspace: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +23,6 @@ class BasicCalculator : AppCompatActivity() {
         tvInput?.append((view as Button).text)
         isLastCharNumeric = true
         isLastCharDot = false
-        isLastCharBackspace = false
     }
 
     fun onClear(view: View) {
@@ -32,25 +30,20 @@ class BasicCalculator : AppCompatActivity() {
     }
 
     fun onBackspace(view: View) {
-        if (isLastCharBackspace) {
-            onClear(view)
-            isLastCharBackspace = false
+        tvInput?.text = tvInput?.text?.dropLast(1)
+        val lastChar = tvInput?.text?.toString()?.last() ?: return
+        if (isValueOperator(lastChar)) {
+            isLastCharNumeric = false
+            isLastCharDot = false
+        } else if (lastChar.equals(".")) {
+            isLastCharNumeric = false
+            isLastCharDot = true
         } else {
-            tvInput?.text = tvInput?.text?.dropLast(1)
-            isLastCharBackspace = true
-            val lastChar = tvInput?.text?.toString()?.last() ?: return
-            if (isValueOperator(lastChar)) {
-                isLastCharNumeric = false
-                isLastCharDot = false
-            } else if (lastChar.equals(".")) {
-                isLastCharNumeric = false
-                isLastCharDot = true
-            } else {
-                isLastCharNumeric = true
-                isLastCharDot = false
-            }
-
+            isLastCharNumeric = true
+            isLastCharDot = false
         }
+
+
     }
 
     fun onDecimalPoint(view: View) {
@@ -67,13 +60,11 @@ class BasicCalculator : AppCompatActivity() {
                 tvInput?.append((view as Button).text)
                 isLastCharDot = false
                 isLastCharNumeric = false
-                isLastCharBackspace = false
             } else if (isLastCharNumeric && isOperatorAdded(it.toString())) {
                 onEqual(view)
                 tvInput?.append((view as Button).text)
                 isLastCharDot = false
                 isLastCharNumeric = false
-                isLastCharBackspace = false
             }
         }
 
@@ -83,7 +74,6 @@ class BasicCalculator : AppCompatActivity() {
         if (isLastCharNumeric) {
             var tvValue = tvInput?.text.toString()
             var prefix = ""
-            isLastCharBackspace = false
 
             try {
                 if (tvValue.startsWith("-")) {
@@ -143,7 +133,7 @@ class BasicCalculator : AppCompatActivity() {
     }
 
     private fun onChangeSign(view: View) {
-
+        //
     }
 
     private fun removeZeroAfterDot(result: String): String {

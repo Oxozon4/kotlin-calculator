@@ -25,33 +25,29 @@
     <Button
         android:id="@+id/btnBasicCalculator"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_margin="2dp"
-        android:layout_marginTop="40dp"
         android:textSize="15sp"
         android:text="@string/basic_calculator" />
     <Button
         android:id="@+id/btnAdvancedCalculator"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_margin="2dp"
-        android:layout_marginTop="50dp"
         android:textSize="15sp"
         android:text="@string/advanced_calculator" />
     <Button
         android:id="@+id/btnAbout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_margin="2dp"
-        android:layout_marginTop="50dp"
         android:textSize="15sp"
         android:text="@string/about" />
     <Button
         android:id="@+id/btnExit"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_margin="2dp"
-        android:layout_marginTop="50dp"
         android:textSize="15sp"
         android:text="@string/exit" />
 

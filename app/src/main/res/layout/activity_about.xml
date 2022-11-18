@@ -10,11 +10,44 @@
         android:id="@+id/tvInput"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@color/lightGrey"
+        android:background="@color/primary"
         android:padding="10dp"
         android:textSize="48sp"
         android:gravity="center"
         android:textColor="@color/secondary"
         android:text="@string/about"
+        />
+    <TextView
+        android:id="@+id/author"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/lightGrey"
+        android:padding="10dp"
+        android:textSize="32sp"
+        android:gravity="center"
+        android:textColor="@color/secondary"
+        android:text="@string/author_marcin_hebda"
+        />
+    <TextView
+        android:id="@+id/index"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/lightGrey"
+        android:padding="10dp"
+        android:textSize="32sp"
+        android:gravity="center"
+        android:textColor="@color/secondary"
+        android:text="229259"
+        />
+    <TextView
+        android:id="@+id/group"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/lightGrey"
+        android:padding="10dp"
+        android:textSize="32sp"
+        android:gravity="center"
+        android:textColor="@color/secondary"
+        android:text="Informatyka, 7I IO"
         />
 </LinearLayout>

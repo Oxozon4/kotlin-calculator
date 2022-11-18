@@ -9,9 +9,10 @@ import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
 
-    var basicCalculatorButton: Button? = null
-    var advancedCalculatorButton: Button? = null
-    var aboutButton: Button? = null
+    private var basicCalculatorButton: Button? = null
+    private var advancedCalculatorButton: Button? = null
+    private var aboutButton: Button? = null
+    private var exitButton: Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +36,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(aboutIntent)
         }
 
+        exitButton = findViewById(R.id.btnExit)
+        exitButton?.setOnClickListener {
+            finish()
+        }
     }
-
-    fun onOperator(view: View) {}
-    fun onAdvancedOperator(view: View) {}
-
 }

@@ -33,4 +33,5 @@
     <string name="x_y">x^y</string>
     <string name="log">Log</string>
     <string name="logg">log</string>
+    <string name="author_marcin_hebda">Author: Marcin Hebda</string>
 </resources>

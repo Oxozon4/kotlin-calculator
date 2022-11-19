@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import kotlin.math.abs
 
 class BasicCalculator : AppCompatActivity() {
     private var tvInput: TextView? = null
@@ -17,6 +18,20 @@ class BasicCalculator : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_basic_calculator)
         tvInput = findViewById(R.id.tvInput)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("calculatorText_key", tvInput?.text.toString())
+        outState.putBoolean("lastCharNumeric_key", isLastCharNumeric)
+        outState.putBoolean("lastCharDot_key", isLastCharDot)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        tvInput?.text = savedInstanceState.getString("calculatorText_key")
+        isLastCharNumeric = savedInstanceState.getBoolean("lastCharNumeric_key")
+        isLastCharDot = savedInstanceState.getBoolean("lastCharDot_key")
+        super.onRestoreInstanceState(savedInstanceState)
     }
 
     fun onDigit(view: View) {
@@ -31,6 +46,11 @@ class BasicCalculator : AppCompatActivity() {
 
     fun onBackspace(view: View) {
         tvInput?.text = tvInput?.text?.dropLast(1)
+        if (tvInput?.text?.toString()?.length == 0) {
+            isLastCharNumeric = false
+            isLastCharDot = false
+            return
+        }
         val lastChar = tvInput?.text?.toString()?.last() ?: return
         if (isValueOperator(lastChar)) {
             isLastCharNumeric = false
@@ -42,8 +62,6 @@ class BasicCalculator : AppCompatActivity() {
             isLastCharNumeric = true
             isLastCharDot = false
         }
-
-
     }
 
     fun onDecimalPoint(view: View) {
@@ -107,7 +125,13 @@ class BasicCalculator : AppCompatActivity() {
 
                     var one = splitValue[0]
                     var two = splitValue[1]
-
+                    if (two == '0'.toString()) {
+                        Toast.makeText(
+                            applicationContext,
+                            "Dividing by 0 is not permitted! Choose another number.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                     if (prefix.isNotEmpty()) {
                         one = prefix + one
                     }
@@ -132,8 +156,12 @@ class BasicCalculator : AppCompatActivity() {
         }
     }
 
-    private fun onChangeSign(view: View) {
-        //
+    fun onChangeSign(view: View) {
+        if (isLastCharNumeric) {
+            var value = tvInput?.text.toString().toDouble()
+            value = if (value > 0) -value else abs(value)
+            tvInput?.text = removeZeroAfterDot(value.toString())
+        }
     }
 
     private fun removeZeroAfterDot(result: String): String {

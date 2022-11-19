@@ -12,7 +12,6 @@ class AdvancedCalculator : AppCompatActivity() {
     private var tvInput: TextView? = null
     private var isLastCharNumeric: Boolean = false
     private var isLastCharDot: Boolean = false
-    private var isLastCharBackspace: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,11 +19,24 @@ class AdvancedCalculator : AppCompatActivity() {
         tvInput = findViewById(R.id.tvInput)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("calculatorText_key", tvInput?.text.toString())
+        outState.putBoolean("lastCharNumeric_key", isLastCharNumeric)
+        outState.putBoolean("lastCharDot_key", isLastCharDot)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        tvInput?.text = savedInstanceState.getString("calculatorText_key")
+        isLastCharNumeric = savedInstanceState.getBoolean("lastCharNumeric_key")
+        isLastCharDot = savedInstanceState.getBoolean("lastCharDot_key")
+        super.onRestoreInstanceState(savedInstanceState)
+    }
+
     fun onDigit(view: View) {
         tvInput?.append((view as Button).text)
         isLastCharNumeric = true
         isLastCharDot = false
-        isLastCharBackspace = false
     }
 
     fun onClear(view: View) {
@@ -32,24 +44,22 @@ class AdvancedCalculator : AppCompatActivity() {
     }
 
     fun onBackspace(view: View) {
-        if (isLastCharBackspace) {
-            onClear(view)
-            isLastCharBackspace = false
+        tvInput?.text = tvInput?.text?.dropLast(1)
+        if (tvInput?.text?.toString()?.length == 0) {
+            isLastCharNumeric = false
+            isLastCharDot = false
+            return
+        }
+        val lastChar = tvInput?.text?.toString()?.last() ?: return
+        if (isValueOperator(lastChar)) {
+            isLastCharNumeric = false
+            isLastCharDot = false
+        } else if (lastChar.equals(".")) {
+            isLastCharNumeric = false
+            isLastCharDot = true
         } else {
-            tvInput?.text = tvInput?.text?.dropLast(1)
-            isLastCharBackspace = true
-            val lastChar = tvInput?.text?.toString()?.last() ?: return
-            if (isValueOperator(lastChar)) {
-                isLastCharNumeric = false
-                isLastCharDot = false
-            } else if (lastChar.equals(".")) {
-                isLastCharNumeric = false
-                isLastCharDot = true
-            } else {
-                isLastCharNumeric = true
-                isLastCharDot = false
-            }
-
+            isLastCharNumeric = true
+            isLastCharDot = false
         }
     }
 
@@ -67,13 +77,11 @@ class AdvancedCalculator : AppCompatActivity() {
                 tvInput?.append((view as Button).text)
                 isLastCharDot = false
                 isLastCharNumeric = false
-                isLastCharBackspace = false
             } else if (isLastCharNumeric && isOperatorAdded(it.toString())) {
                 onEqual(view)
                 tvInput?.append((view as Button).text)
                 isLastCharDot = false
                 isLastCharNumeric = false
-                isLastCharBackspace = false
             }
         }
     }
@@ -86,7 +94,6 @@ class AdvancedCalculator : AppCompatActivity() {
                 var result: String? = null
 
                 isLastCharDot = false
-                isLastCharBackspace = false
                 isLastCharNumeric = true
                 if (operator == "sin") {
                     result = sin(tvValue).toString()
@@ -110,8 +117,6 @@ class AdvancedCalculator : AppCompatActivity() {
                     return
                 }
                 tvInput?.text = result?.let { it1 -> removeZeroAfterDot(it1) }
-            } else {
-                // Toast
             }
         }
     }
@@ -120,7 +125,6 @@ class AdvancedCalculator : AppCompatActivity() {
         if (isLastCharNumeric) {
             var tvValue = tvInput?.text.toString()
             var prefix = ""
-            isLastCharBackspace = false
 
             try {
                 if (tvValue.startsWith("-")) {
@@ -155,6 +159,13 @@ class AdvancedCalculator : AppCompatActivity() {
                     var one = splitValue[0]
                     var two = splitValue[1]
 
+                    if (two == '0'.toString()) {
+                        Toast.makeText(
+                            applicationContext,
+                            "Dividing by 0 is not permitted! Choose another number.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                     if (prefix.isNotEmpty()) {
                         one = prefix + one
                     }
@@ -199,8 +210,12 @@ class AdvancedCalculator : AppCompatActivity() {
         }
     }
 
-    private fun onChangeSign(view: View) {
-
+    fun onChangeSign(view: View) {
+        if (isLastCharNumeric) {
+            var value = tvInput?.text.toString().toDouble()
+            value = if (value > 0) -value else abs(value)
+            tvInput?.text = removeZeroAfterDot(value.toString())
+        }
     }
 
     private fun removeZeroAfterDot(result: String): String {

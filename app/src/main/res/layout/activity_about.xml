@@ -37,17 +37,6 @@
         android:textSize="32sp"
         android:gravity="center"
         android:textColor="@color/secondary"
-        android:text="229259"
-        />
-    <TextView
-        android:id="@+id/group"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/lightGrey"
-        android:padding="10dp"
-        android:textSize="32sp"
-        android:gravity="center"
-        android:textColor="@color/secondary"
-        android:text="Informatyka, 7I IO"
+        android:text="229259, 7I IO"
         />
 </LinearLayout>
